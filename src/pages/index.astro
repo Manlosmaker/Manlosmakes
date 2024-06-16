@@ -1,16 +1,40 @@
 ---
-
+const allPosts = await Astro.glob('./posts/*.md');
 ---
 
 <html lang="en">
 	<head>
+		<!-- style sheet import -->
+		<link rel="stylesheet" href="public/styles/global.css">
+		<!-- Google fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<title>home</title>
 	</head>
 	<body>
-		<h1>Astro</h1>
+		<h1 id="title">Manlosmade</h1>
+		<p id="titleDescription">Manlosmade is a simple blog which covers web-dev and geopolitics (A great combination I know!). I also post my programming projects here. This is a template website before I have time to work some more on it. </p>
+		
+		<!-- This simply creates a post element-thing with an image title date and description -->
+		{allPosts.map((post) =>
+		<li class="posts">
+			<a class="postsUrl" href={post.url}>
+				<img class="postsImage" src={post.frontmatter.image.url} />
+				<div class="postsDescTitleDateDiv">
+					<div class="postsDescAndTitleDiv">
+						<h3 class="postsTitle">{post.frontmatter.title}</h3>
+						<p class="PostsDescription">{post.frontmatter.description}</p>
+					</div>
+					<p class="postsPubDate">Published date: <br/>{post.frontmatter.pubDate.toString().slice(0,10)}</p>
+				</div>
+			</a>
+		</li>)}
+
+
 	</body>
 </html>
